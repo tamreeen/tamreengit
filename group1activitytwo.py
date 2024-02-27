@@ -1,7 +1,9 @@
 """ The Project is done by Tamreen, Ali and Ziad, 
-we will use the return statement to return to send a result back to the caller function
-all the constant rates we have used in this program, was found from google
-we will use the print statement which displays output to the terminal """
+Tamreen: mostly worked on the if statements and loops and input functions 
+Ali: mostly worked on the if statements and while loops
+Ziad: mostly worked on the print functions and return functions about currency conversion"""
+
+#all the constant rates we have used in this program, was found from google
 
 def aed_to_eur(money): # money is the parameter and this option willl let you convert from aed to euro
     rate = 0.25 
@@ -28,21 +30,13 @@ def britishPound_to_aed(amount):
     return amount * rate
 
 
-print("Main menu! this is the conversion game")
+print("Main menu! this is the conversion game") #print statement which displays output to the terminal
 
-local_currencies = ["AED to Foreign currency"]
-for local_currency in local_currencies:
-     print(local_currency)
-
-print("or")
-
-foreign_currencies = ["Foreign currency to AED"]
-for foreign_currency in foreign_currencies:
+foreign_currencies = ["EUR, USD DOLLAR, BRITISH POUND"]
+for foreign_currency in foreign_currencies: # for loop lets you go through the list one item at a time
      print(foreign_currency)
 
-
-    
-while True: #while loop will constantly execute a block of code as long as a specified condition is true
+    while True: #while loop will constantly execute a block of code as long as a specified condition is true
        main_menu = print("Select the conversion direction:")
        print("1. AED to other currencies")
        print("2. Other currencies to AED")
@@ -59,7 +53,7 @@ while True: #while loop will constantly execute a block of code as long as a spe
            if sub_choice == '1':
             converted_amount = aed_to_eur(money)
             print(money, "AED is equal to converted_amount: EUR",converted_amount,) 
-            break
+            break #the break statement is used to break out of a loop
            
            elif sub_choice == '3':
             converted_amount = aed_to_britishPound(money)
