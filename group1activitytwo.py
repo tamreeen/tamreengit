@@ -2,6 +2,7 @@
 we will use the return statement to return to send a result back to the caller function
 all the constant rates we have used in this program, was found from google
 we will use the print statement which displays output to the terminal """
+
 def aed_to_eur(money): # money is the parameter and this option willl let you convert from aed to euro
     rate = 0.25 
     return money * rate #, we are multiplying "money * rate", to calculate the equivalent amount of money in another currency.
@@ -74,10 +75,6 @@ while True: #while loop will constantly execute a block of code as long as a spe
 
             
     
-
-             
-
-
        elif main_choice == '2':
           print("1. USD to AED")
           print("2. British Pound to AED")
@@ -114,28 +111,24 @@ while True: #while loop will constantly execute a block of code as long as a spe
             print("your option is invalid")
             break
 
-while True:
-     hi = input("do you want to continue the game (yes or no):")
+while True:     
+      continue_game = input("did you enjoy the game (yes or no):")
 
-     if hi == 'yes':
-        print(main_menu, "welcome back")
+      if continue_game == 'yes':
+         print("thank you for your positive feedback")
+         break 
 
-     elif hi == 'no':
-        print("exiting")
+      elif continue_game == 'no':
+        input("why did you not enjoy it?:")
+        print("thank you for your feedback")
         break
-     else:
-        print("your statement is invalid")
 
-
-
+      else:
+         print("your statement is invalid")
+         break
       
       
 
-
-
-
-     
-   
 
 def main():
    
