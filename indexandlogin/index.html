@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sustainable Advocate License</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        /* Main container */
+        .main-container {
+            width: 80%;
+            max-width: 1200px;
+            padding: 40px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #2e7d32;
+            font-size: 2.5rem;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+   
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 5px;
+        }
+
+        .login-button {
+            background-color: #2e7d32;
+        }
+
+        .register-button {
+            background-color: #388e3c;
+        }
+
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            flex-basis: 30%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card h3 {
+            color: #2e7d32;
+        }
+
+        .progress-tracker {
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .progress-tracker h2 {
+            color: #2e7d32;
+        }
+
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+            }
+
+            .feature-card {
+                flex-basis: 100%;
+            }
+
+            .button-container {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <h1>Sustainable Advocate License</h1>
+    <p>Learn, engage, and become certified in sustainable practices through our interactive platform</p>
+
+    <div class="button-container">
+        <button class="login-button" onclick="location.href='login.html'">Login</button>
+        <button class="register-button" onclick="location.href='register.html'">Register</button>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <h3>Educational Articles</h3>
+            <p>Learn about sustainability through a variety of topics like renewable energy and waste reduction.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Interactive Games</h3>
+            <p>Test your knowledge with fun and engaging sustainability-related games.</p>
+        </div>
+
+        <div class="feature-card">
+            <h3>Earn Points</h3>
+            <p>Track your progress and earn points as you work toward your Sustainable Advocate License.</p>
+        </div>
+    </div>
+
+    <div class="progress-tracker">
+        <h2>Your Sustainable Journey</h2>
+        <p>Create an account or log in to start tracking your progress toward becoming a certified Sustainable Advocate!</p>
+        <p id="user-status">You are not logged in</p>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous">
+
+    // i took this line from week 3 folder 
+</script>
+   
+
+
+<script>
+    //the script runs only after the HTML page is fully loaded
+    $(document).ready(function () {
+
+        //Selects the paragraph (<p id="user-status">) where we will update login status.
+        const userStatus = $("#user-status");
+
+        //Selects the div containing the login and register buttons.
+        const buttonContainer = $(".button-container");
+        
+        //Retrieves the value of isLoggedIn from localStorage If it MATCHES the if statement exists and is true, 
+        // the user is considered logged in. so a text will appear which will be welcome back...
+
+        const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+        if (isLoggedIn === "true") {
+            userStatus.text("Welcome back! Continue your sustainable journey.");
+            buttonContainer.empty(); // Clear login and register buttons because now u are logged in
+
+            // so now the buttons will be replaced by the id buttons and logout button
+            buttonContainer.append('<button class="login-button" id="dashboard-btn">My Dashboard</button>');
+            buttonContainer.append('<button class="register-button" id="logout-btn">Logout</button>');
+
+            // if the user clicks dashboard buttons, we will redirect that user to that html page
+            $("#dashboard-btn").click(function () {
+                $(location).attr("href", "dashboard.html");
+            });
+
+            // by clicking logout button, they will be logged out
+            $("#logout-btn").click(function () {
+                delete localStorage["isLoggedIn"]; // now the browser will forget the user because we deleted its info
+
+                location.href = location.href; // we are assigning the url to itself, so it refreshes the page
+            });
+        }
+    });
+</script>
+
+
+</body>
+</html>
