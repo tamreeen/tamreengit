@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Sustainable Advocate License</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #f0f7f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Login</h2>
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" placeholder="Enter Username">
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" placeholder="Enter Password">
+    </div>
+
+    <button type="button" class="btn btn-success btn-block" id="login-btn">Login</button>
+    <p class="error-message" id="error-message">Invalid credentials!</p>
+</div>
+<script>
+    $(document).ready(function () {
+        // Initially hide the error message
+        document.getElementById("error-message").style.visibility = "hidden";
+
+        // When the login button is clicked
+        document.getElementById("login-btn").onclick = function() {
+            // Get the username and password values
+            var username = document.getElementById("username").value;
+            var password = document.getElementById("password").value;
+
+            // Check if username or password is empty
+            if (username === "" || password === "") {
+                // Display the error message
+                var errorMessage = document.getElementById("error-message");
+                errorMessage.textContent = "Please enter both username and password.";
+                errorMessage.style.visibility = "visible";
+            } else {
+                // Simulate successful login (replace with actual authentication logic)
+                if (username === "user" && password === "password") {
+                    // Redirect to dashboard
+                    window.location.href = "dashboard.html";
+                } else {
+                    // Display invalid credentials error
+                    var errorMessage = document.getElementById("error-message");
+                    errorMessage.textContent = "Invalid username or password.";
+                    errorMessage.style.visibility = "visible";
+                }
+            }
+        };
+    });
+</script>
+</body>
+</html>
+
