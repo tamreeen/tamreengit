@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learning Progress Dashboard</title>
+
+    <!-- Semantic UI CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body {
+            background-color: #f4f4f4;
+            padding-top: 2rem;
+        }
+        .dashboard-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .progress-cards {
+            margin-bottom: 2rem;
+        }
+        .chart-container {
+            background-color: white;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="ui container dashboard-container">
+    <div class="ui segment">
+        <h1 class="ui header">
+            <i class="chart line icon"></i>
+            <div class="content">
+                Learning Progress Dashboard
+                <div class="sub header">Track your learning journey</div>
+            </div>
+        </h1>
+
+        <div class="ui three column grid progress-cards">
+            <div class="column">
+                <div class="ui fluid card">
+                    <div class="content">
+                        <div class="header">Total Points</div>
+                        <div class="meta">Learning Achievement</div>
+                        <div class="description">
+                            <h2 id="total-points" class="ui header">0</h2>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <i class="trophy icon"></i>
+                        Points Earned
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="ui fluid card">
+                    <div class="content">
+                        <div class="header">Articles Completed</div>
+                        <div class="meta">Learning Progress</div>
+                        <div class="description">
+                            <h2 id="articles-completed" class="ui header">0</h2>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <i class="book icon"></i>
+                        Total Articles
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="ui fluid card">
+                    <div class="content">
+                        <div class="header">Learning Time</div>
+                        <div class="meta">Hours Studied</div>
+                        <div class="description">
+                            <h2 id="learning-time" class="ui header">0.00</h2>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <i class="clock icon"></i>
+                        Total Hours
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="progressChart"></canvas>
+        </div>
+
+        <div class="ui divider"></div>
+
+        <div class="ui two column grid">
+            <div class="column">
+                <div class="ui buttons">
+                    <button id="complete-short-article-btn" class="ui primary button">
+                        <i class="book icon"></i>
+                        Complete Short Article (10 pts)
+                    </button>
+                    <button id="complete-long-article-btn" class="ui green button">
+                        <i class="newspaper icon"></i>
+                        Complete Long Article (25 pts)
+                    </button>
+                </div>
+            </div>
+            <div class="column">
+                <div class="ui warning message hidden" id="article-completion-message">
+                    <i class="close icon"></i>
+                    <div class="header">Article Completed!</div>
+                    <p>Great job tracking your progress.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Semantic UI Dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+
+<script>
+    const userId = 'user1'; // In a real app, this would be dynamically set
+
+    // Fetch user progress
+    async function fetchUserProgress() {
+        try {
+            const response = await fetch(`/api/v1/progress/${userId}`);
+            const progress = await response.json();
+
+            // Update stats
+            document.getElementById('total-points').textContent = progress.totalPoints;
+            document.getElementById('articles-completed').textContent = progress.articlesCompleted;
+            document.getElementById('learning-time').textContent = (progress.totalLearningTimeSeconds / 3600).toFixed(2);
+
+            // Create progress chart
+            createProgressChart(progress);
+        } catch (error) {
+            console.error('Error fetching progress:', error);
+            $('.ui.message').removeClass('hidden').addClass('visible error');
+        }
+    }
+
+    // Create progress chart
+    function createProgressChart(progress) {
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Points', 'Articles', 'Learning Time (Hours)'],
+                datasets: [{
+                    label: 'Progress Metrics',
+                    data: [
+                        progress.totalPoints,
+                        progress.articlesCompleted,
+                        progress.totalLearningTimeSeconds / 3600
+                    ],
+                    backgroundColor: [
+                        'rgba(33, 133, 208, 0.6)',  // Primary blue
+                        'rgba(251, 189, 8, 0.6)',   // Yellow
+                        'rgba(33, 186, 69, 0.6)'    // Green
+                    ],
+                    borderColor: [
+                        'rgba(33, 133, 208, 1)',
+                        'rgba(251, 189, 8, 1)',
+                        'rgba(33, 186, 69, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Learning Progress Overview'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Simulate completing an article
+    async function completeArticle(points, learningTime) {
+        try {
+            const response = await fetch(`/api/v1/progress/${userId}/complete-article?points=${points}&learningTimeSeconds=${learningTime}`, {
+                method: 'POST'
+            });
+
+            if (response.ok) {
+                // Show success message
+                $('#article-completion-message')
+                    .removeClass('hidden')
+                    .transition('fade in');
+
+                // Refresh progress after 2 seconds
+                setTimeout(() => {
+                    fetchUserProgress();
+                    $('#article-completion-message').transition('fade out');
+                }, 2000);
+            }
+        } catch (error) {
+            console.error('Error completing article:', error);
+        }
+    }
+
+    // Event Listeners
+    document.getElementById('complete-short-article-btn').addEventListener('click', () => {
+        completeArticle(10, 1200); // 10 points, 20 minutes learning time
+    });
+
+    document.getElementById('complete-long-article-btn').addEventListener('click', () => {
+        completeArticle(25, 3600); // 25 points, 1 hour learning time
+    });
+
+    // Close message
+    $('.message .close').on('click', function() {
+        $(this).closest('.message').transition('fade out');
+    });
+
+    // Initial load
+    fetchUserProgress();
+</script>
+</body>
+</html>
