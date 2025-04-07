@@ -105,61 +105,92 @@
 <body>
 
 <div class="main-container">
+    <!-- Main title of the page, welcoming the user -->
     <h1>Sustainable Advocate License</h1>
+
+    <!-- Short description of the platform -->
     <p>Learn, engage, and become certified in sustainable practices through our interactive platform</p>
 
+    <!-- Container for Login and Register buttons -->
     <div class="button-container">
+        <!-- Login button that redirects to the login page when clicked -->
         <button class="btn btn-success login-button" onclick="location.href='login.html'">Login</button>
+
+        <!-- Register button that redirects to the register page when clicked -->
         <button class="btn btn-success register-button" onclick="location.href='register.html'">Register</button>
     </div>
 
+    <!-- Features section, where we describe what the platform offers -->
     <div class="features">
+        <!-- Feature card for educational articles -->
         <div class="feature-card">
             <h3>Educational Articles</h3>
             <p>Learn about sustainability through a variety of topics like renewable energy and waste reduction.</p>
         </div>
 
+        <!-- Feature card for interactive games -->
         <div class="feature-card">
             <h3>Interactive Games</h3>
             <p>Test your knowledge with fun and engaging sustainability-related games.</p>
         </div>
 
+        <!-- Feature card for earning points -->
         <div class="feature-card">
             <h3>Earn Points</h3>
             <p>Track your progress and earn points as you work toward your Sustainable Advocate License.</p>
         </div>
     </div>
 
+    <!-- Progress Tracker section where users can track their journey -->
     <div class="progress-tracker">
+        <!-- Heading that introduces the progress tracker -->
         <h2>Your Sustainable Journey</h2>
+
+        <!-- Short description inviting users to log in and track their progress -->
         <p>Create an account or log in to start tracking your progress toward becoming a certified Sustainable Advocate!</p>
+
+        <!-- Displays user status (whether they are logged in or not) -->
         <p id="user-status">You are not logged in</p>
     </div>
 </div>
 
+<!-- Including jQuery for handling interactions like checking if the user is logged in -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <script>
+    // When the page is fully loaded, this function runs
     $(document).ready(function () {
+        // Get the paragraph with id 'user-status' (where we display if the user is logged in)
         const userStatus = $("#user-status");
+
+        // Get the container for the buttons
         const buttonContainer = $(".button-container");
 
+        // Check if the user is logged in using localStorage
         const isLoggedIn = localStorage.getItem("isLoggedIn");
 
+        // If the user is logged in (localStorage has the flag 'isLoggedIn' set to true)
         if (isLoggedIn === "true") {
+            // Update the user status text to welcome them back
             userStatus.text("Welcome back! Continue your sustainable journey.");
-            buttonContainer.empty(); // Clear login and register buttons
 
+            // Clear the login and register buttons
+            buttonContainer.empty();
+
+            // Add a button to go to the user's dashboard
             buttonContainer.append('<button class="btn btn-success" id="dashboard-btn">My Dashboard</button>');
+            // Add a button to log the user out
             buttonContainer.append('<button class="btn btn-danger" id="logout-btn">Logout</button>');
 
+            // When the "My Dashboard" button is clicked, redirect to the dashboard page
             $("#dashboard-btn").click(function () {
                 $(location).attr("href", "dashboard.html");
             });
 
+            // When the "Logout" button is clicked, remove the login information and reload the page
             $("#logout-btn").click(function () {
-                delete localStorage["isLoggedIn"]; // Remove login info from localStorage
-                location.href = 'index.html'; // Redirect to homepage after logout
+                delete localStorage["isLoggedIn"]; // Remove the logged-in flag from localStorage
+                location.href = 'index.html'; // Redirect to the homepage after logging out
             });
         }
     });
@@ -167,3 +198,4 @@
 
 </body>
 </html>
+

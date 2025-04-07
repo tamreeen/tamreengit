@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Article Notes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .notes-cell {
+            max-width: 400px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Article Notes</h1>
+
+    <!-- Display article notes table -->
+    <table>
+        <thead>
+        <tr>
+            <th>Index</th>
+            <th>Article Name</th>
+            <th>Notes</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#articlenotes}}
+            <tr>
+                <td>{{index}}</td>
+                <td>{{articleName}}</td>
+                <td class="notes-cell">{{notes}}</td>
+            </tr>
+        {{/articlenotes}}
+        {{^articlenotes}}
+            <tr>
+                <td colspan="3">No article notes available</td>
+            </tr>
+        {{/articlenotes}}
+        </tbody>
+    </table>
+
+    <!-- Form to add new article notes -->
+    <h2>Add New Article Note</h2>
+    <form method="POST" action="/articlenotes">
+        <div class="form-group">
+            <label for="index">Index:</label>
+            <input type="number" id="index" name="index" required>
+        </div>
+        <div class="form-group">
+            <label for="articleName">Article Name:</label>
+            <input type="text" id="articleName" name="articleName" required>
+        </div>
+        <div class="form-group">
+            <label for="notes">Notes:</label>
+            <textarea id="notes" name="notes" placeholder="Enter a few notes from the article you've read"></textarea>
+        </div>
+        <button type="submit">Add Article Note</button>
+    </form>
+</div>
+</body>
+</html>
