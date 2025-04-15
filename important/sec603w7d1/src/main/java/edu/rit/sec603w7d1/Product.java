@@ -3,15 +3,16 @@ package edu.rit.sec603w7d1;
 
 
 public class Product {
-    private Long id;
+    private Long id; // allows you to enter 64 bits integers which a string does not allow u to
     private String name;
     private int quantity;
     private double price;
 
     // Constructor
-    public Product() {
+    public Product() {  // this is like the product that you created as default constructor where sometimes objects will not have values
     }
 
+    // this is the real product with things you want to include
     public Product(Long id, String name, int quantity, double price) {
         this.id = id;
         this.name = name;

@@ -12,7 +12,8 @@ import java.util.Optional;
 @Service
 public class ProductService {
 
-    @Autowired
+    @Autowired // this injects another class to this class
+    // it is necessary to mention this so only this service class can use this class taken from another section
     private ProductRepository productRepository;
 
     // Get all products
